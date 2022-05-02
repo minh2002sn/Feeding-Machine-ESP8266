@@ -31,10 +31,10 @@ void RT_Execute(){
 }
 
 void RT_Handle(){
-  static uint8_t last_hour = 0;
-  static uint8_t last_minute = 0;
-  static uint8_t last_day = 1;
-  static uint32_t timer = 0;
+  static uint8_t t_last_hour = 0;
+  static uint8_t t_last_minute = 0;
+  static uint8_t t_last_day = 1;
+  static uint32_t t_timer = 0;
 
   if(WiFi.status() == WL_CONNECTED){
     ntp.update();
@@ -43,9 +43,9 @@ void RT_Handle(){
     hour = ntp.getHours();
     day = day_data[ntp.getDay()];
 
-    timer = millis();
+    t_timer = millis();
   } else{
-    if(millis() - timer >= 60000){
+    if(millis() - t_timer >= 60000){
       if(minute == 59){
         minute = 0;
         if(hour == 23){
@@ -61,15 +61,15 @@ void RT_Handle(){
       } else{
         minute++;
       }
-      timer = millis();
+      t_timer = millis();
     }
   }
 
-  if(last_hour != hour || last_minute != minute || last_day != day){
+  if(t_last_hour != hour || t_last_minute != minute || t_last_day != day){
     RT_Execute();
   }
 
-  last_hour = hour;
-  last_minute = minute;
-  last_day = day;
+  t_last_hour = hour;
+  t_last_minute = minute;
+  t_last_day = day;
 }

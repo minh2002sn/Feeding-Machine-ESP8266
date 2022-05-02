@@ -11,8 +11,10 @@
 typedef enum{
   WIFI_IDLE_STATE,
   WIFI_SMART_CONFIG_STATE,
-  WIFI_GET_REAL_TIME_STATE,
-  WIFI_GET_CONNECTION_STATE,
+  WIFI_GETTING_REAL_TIME_STATE,
+  WIFI_GETTING_CONNECTION_STATE,
+  WIFI_SCANNING_NETWORK_STATE,
+  WIFI_CONNECTING_NETWORK_STATE,
 }WIFI_STATE_HandleTypeDef;
 
 typedef struct{
@@ -22,7 +24,10 @@ typedef struct{
 void WIFI_Init();
 void WIFI_Handle();
 void WIFI_Check_Connection();
+void WIFI_Scan();
+void WIFI_Connect();
 
-void WIFI_Set_State(WIFI_STATE_HandleTypeDef state);
+void WIFI_Set_State(WIFI_STATE_HandleTypeDef p_state);
+void WIFI_Set_State_Connecting(uint8_t p_ssid_index, char p_pass[]);
 
 #endif

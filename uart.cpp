@@ -12,12 +12,12 @@ void UART_Init(){
   
 }
 
-void UART_Receive(uint8_t Rx_Data){
-  if(Rx_Data == '\n'){
+void UART_Receive(uint8_t p_Rx_Data){
+  if(p_Rx_Data == '\n'){
     uart_buffer[uart_pointer++] = '\0';
     uart_flag = 1;
   } else{
-    uart_buffer[uart_pointer++] = Rx_Data;
+    uart_buffer[uart_pointer++] = p_Rx_Data;
   }
 }
 
@@ -26,20 +26,26 @@ void UART_Handle(){
     UART_Receive(Serial.read());
   }
   if(uart_flag){
-    char arg_value[10][20];
-    uint8_t arg_num = 0;
-    char *token = strtok((char*)uart_buffer, " ");
-    while(token != NULL){
-      strcpy(arg_value[arg_num++], token);
-      token = strtok(NULL, " ");
+    char t_arg_value[10][20];
+    uint8_t t_arg_num = 0;
+    char *t_token = strtok((char*)uart_buffer, " ");
+    while(t_token != NULL){
+      strcpy(t_arg_value[t_arg_num++], t_token);
+      t_token = strtok(NULL, " ");
     }
 
-    if(strstr(arg_value[0], "GET_REAL_TIME") != NULL){
-      WIFI_Set_State(WIFI_GET_REAL_TIME_STATE);
-    } else if(strstr(arg_value[0], "SMART_CONFIG") != NULL){
+    if(strstr(t_arg_value[0], "GET_REAL_TIME") != NULL){
+      WIFI_Set_State(WIFI_GETTING_REAL_TIME_STATE);
+    } else if(strstr(t_arg_value[0], "SMART_CONFIG") != NULL){
       WIFI_Set_State(WIFI_SMART_CONFIG_STATE);
-    } else if(strstr(arg_value[0], "GET_CONNECTION") != NULL){
-      WIFI_Set_State(WIFI_GET_CONNECTION_STATE);
+    } else if(strstr(t_arg_value[0], "GET_CONNECTION") != NULL){
+      WIFI_Set_State(WIFI_GETTING_CONNECTION_STATE);
+    } else if(strstr(t_arg_value[0], "GET_NETWORKS") != NULL){
+      WIFI_Set_State(WIFI_SCANNING_NETWORK_STATE);
+    } else if(strstr(t_arg_value[0], "CONNECT_WIFI") != NULL){
+      if(t_arg_num == 3){
+        WIFI_Set_State_Connecting(atoi(t_arg_value[1]), t_arg_value[2]);
+      }
     }
     
     uart_pointer = 0;
