@@ -14,6 +14,7 @@ typedef enum{
   WIFI_GETTING_REAL_TIME_STATE,
   WIFI_GETTING_CONNECTION_STATE,
   WIFI_SCANNING_NETWORK_STATE,
+  WIFI_SENDING_SSID_STATE,
   WIFI_CONNECTING_NETWORK_STATE,
 }WIFI_STATE_HandleTypeDef;
 
@@ -25,9 +26,13 @@ void WIFI_Init();
 void WIFI_Handle();
 void WIFI_Check_Connection();
 void WIFI_Scan();
+void WIFI_Send_SSID();
 void WIFI_Connect();
 
 void WIFI_Set_State(WIFI_STATE_HandleTypeDef p_state);
 void WIFI_Set_State_Connecting(uint8_t p_ssid_index, char p_pass[]);
+WIFI_STATE_HandleTypeDef WIFI_Get_State();
+
+void Enable_Sending_SSID();
 
 #endif

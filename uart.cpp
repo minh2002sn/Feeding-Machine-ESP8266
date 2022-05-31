@@ -22,9 +22,12 @@ void UART_Receive(uint8_t p_Rx_Data){
 }
 
 void UART_Handle(){
+  // Receive UART string
   if(Serial.available() > 0){
     UART_Receive(Serial.read());
   }
+
+  // Handle UART string
   if(uart_flag){
     char t_arg_value[10][20];
     uint8_t t_arg_num = 0;
@@ -45,6 +48,10 @@ void UART_Handle(){
     } else if(strstr(t_arg_value[0], "CONNECT_WIFI") != NULL){
       if(t_arg_num == 3){
         WIFI_Set_State_Connecting(atoi(t_arg_value[1]), t_arg_value[2]);
+      }
+    } else if(strstr(t_arg_value[0], "OK") != NULL){
+      if(WIFI_Get_State() == WIFI_SENDING_SSID_STATE){
+        Enable_Sending_SSID();
       }
     }
     
