@@ -8,9 +8,11 @@ void SM_Init(){
   WiFi.setAutoConnect(true);
   Serial.println();
   Serial.print("WIFI CONNECTING\n");
+  delay(500);
   if(WiFi.waitForConnectResult(20000) == WL_CONNECTED){
     Serial.print("WiFi CONNECTED\n");
     WiFi.setAutoReconnect(true);
+    WiFi.persistent(true);
   } else{
     Serial.print("WIFI DISCONNECTED\n");
   }
@@ -35,6 +37,7 @@ void SM_Execute(){
       if(WiFi.waitForConnectResult(20000) == WL_CONNECTED){
         Serial.print("WIFI CONNECTED\n");
         WiFi.setAutoReconnect(true);
+        WiFi.persistent(true);
       } else{
         Serial.print("WIFI DISCONNECTED\n");
       }
@@ -42,9 +45,11 @@ void SM_Execute(){
     }
   }
   Serial.print("WIFI CONNECTING\n");
+  delay(500);
   if(WiFi.waitForConnectResult(20000) == WL_CONNECTED){
     Serial.print("WiFi CONNECTED\n");
     WiFi.setAutoReconnect(true);
+    WiFi.persistent(true);
   } else{
     Serial.print("WIFI DISCONNECTED\n");
   }
