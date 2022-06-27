@@ -82,8 +82,19 @@ void WIFI_Check_Connection(){
     t_last_stt = t_stt;
     t_timer = millis();
   }
+
   if(!WiFi.getAutoConnect()){
     WiFi.setAutoConnect(true);
+    WiFi.persistent(true);
+  }
+
+  if(millis() - t_timer > 30000){
+    if(t_stt == WL_CONNECTED){
+      Serial.print("WIFI CONNECTED\n");
+    } else{
+      Serial.print("WIFI DISCONNECTED\n");
+    }
+    t_timer = millis();
   }
   if(millis() - t_timer > 30000){
     if(t_stt == WL_CONNECTED){

@@ -6,6 +6,7 @@ static char pass[30] = {};
 void SM_Init(){
   WiFi.begin();
   WiFi.setAutoConnect(true);
+  WiFi.persistent(true);
   Serial.println();
   Serial.print("WIFI CONNECTING\n");
   delay(500);
